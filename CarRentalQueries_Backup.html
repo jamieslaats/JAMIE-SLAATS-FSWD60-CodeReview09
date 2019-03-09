@@ -1,0 +1,32 @@
+CARRENTALQUERY1
+
+SELECT rentalreservation.Rental_reservation_ID, customer.Last_name, customer.Drivers_lic_num, rentalcars.Brand, rentalcars.Model_num, rentalcars.KM_stand, carclassprice.Class_name, carclassprice.Car_price_perday
+FROM rentalreservation
+INNER JOIN customer ON rentalreservation.fk_Customer_ID = customer.Customer_ID
+INNER JOIN rentalcars ON rentalreservation.fk_Rental_Car_ID = rentalcars.Rental_car_ID
+INNER JOIN carclassprice ON rentalcars.fk_Class_ID = carclassprice.Class_ID
+
+
+CUSTOMERCREDITCARD QUERY
+SELECT customer.Last_name, customer.Street_address, customer.City, customer.Post_code, customer.Country, customer.Date_of_birth, customer.Drivers_lic_num, custcreditcard.Card_num, custcreditcard.Expire_date
+FROM customer
+INNER JOIN custcreditnum ON customer.fk_Custcreditnum_ID = custcreditnum.Custcreditnum_ID
+INNER JOIN custcreditcard ON custcreditnum.fk_Custcreditcard_ID = custcreditcard.Custcreditcard_ID
+
+
+EXTRA CHARGES QUERY
+SELECT returnextracharge.Name, returnextracharge.Type, returnextracharge.Price, pickup.Date_pickup, pickup.fk_Locations_ID, dropoff.Date_dropoff, dropoff.fk_Locations_ID
+FROM rentalreservation
+INNER JOIN returnextracharge ON rentalreservation.fk_return_extracharge_ID = returnextracharge.Return_extracharge_ID
+INNER JOIN pickup ON rentalreservation.fk_Pickup_ID = pickup.Pickup_ID
+INNER JOIN dropoff ON rentalreservation.fk_Dropoff_ID = dropoff.Dropoff_ID
+
+
+LEGAL NAME AND ADDRESS QUERY
+SELECT rentalcolegalname.Legal_name, locations.Street_address, locations.City, locations.Province_State, locations.Post_code, locations.Country
+FROM rentalcolegalname
+INNER JOIN locations ON rentalcolegalname.fk_Locations_ID = locations.Locations_ID
+
+
+RENTAL RESERVATION COUNT QUERY
+SELECT COUNT(*) FROM rentalreservation
